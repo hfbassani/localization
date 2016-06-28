@@ -71,6 +71,7 @@ float mapLines[20][4];//at most 20 lines
 int nLines=0;
 
 //DRAWING MAP
+#define DRAW_CLEAR  1
 #define DRAW_MAP    1
 #define DRAW_BELL   1
 #define DRAW_REAL_ROBOT_POS     1
@@ -794,15 +795,14 @@ void drawRobot(cv::Mat &image, float robotPos[3]) {
 
 void draw(cv::Mat &bel, float distF, float distL, float distR) {
     
-    image = 0.0; //clear image
+    if (DRAW_CLEAR)
+        image = 0.0; //clear image
     
-    if (DRAW_MAP) {
+    if (DRAW_MAP)
         drawMap(image);
-    }
     
-    if (DRAW_BELL) {
+    if (DRAW_BELL)
         drawBel(image, bel);
-    }
     
     if (DRAW_REAL_ROBOT_POS) {
         float pos[3];
@@ -944,13 +944,13 @@ int main(int argc, char* argv[]) {
             //draw our debug diagram:
             draw(bel, distF, distL, distR);
 
-            //Let some time for V-REP do its work:
-            extApi_sleepMs(2);
-            
             //Read simulation time of the last command:
             simxInt time = getSimTimeMs(clientID); //Simulation time in ms or 0 if sim is not running
             //stop the loop if simulation is has been stopped:
             if (time == 0) break;                
+            
+            //Let some time for V-REP do its work:
+            extApi_sleepMs(2);            
         }
 
         //Stop the robot and disconnect from V-Rep;
