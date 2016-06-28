@@ -1,0 +1,27 @@
+Projeto C++ do Netbeans/Visual Studio
+
+Este projeto apresenta um exemplo de como utilizar a API remota (rede) do V-REP para controlar o robô de direção diferencial.
+
+Passos:
+
+1 - Configure o IP da máquina onde o está V-REP (127.0.0.1, caso esteja na mesma máquina):
+
+	#define V_REP_IP_ADDRESS "10.0.2.2"//"127.0.0.1"
+
+2 - Configure a porta utilizada pelo V-REP, geralmente 19997 ou 1999:
+
+	#define V_REP_PORT 19997//1999;
+
+3 - Abra o V-REP e no script Lua do robô no V-REP, comente as linhas que enviam comando para os motores com “—“:
+
+    -- simSetJointTargetVelocity(leftMotor,speedLeft)
+    -- simSetJointTargetVelocity(rightMotor,speedRight)
+
+4 - Execute o programa, ele irá:
+  - Tentar se conectar com o V-REP;
+  - Iniciar a simulação;
+  - Ler a posição do robô e o tempo da simulação;
+  - Ler o delta na posição de cada roda em radianos;
+  - Enviar velocidade para as rodas.
+  - Encerrar o programa se a simulação for parada no V-REP (botão stop).
+
